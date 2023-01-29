@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
+import time
 
 import undetected_chromedriver
 
 from bs4 import BeautifulSoup
 
 from selenium.webdriver.common.by import By
+from undetected_chromedriver.options import ChromeOptions
 
 from creation_files_and_folders import files_path_binance, binance_tickers, csv
-import time
+
+import logging
 
 Open = []
 Max = []
 Min = []
 Close = []
+
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
 
 class SeleniumBinance:
@@ -26,8 +31,11 @@ class SeleniumBinance:
         self._get_html()
 
     def _get_html(self):
+        logging.info("Парсинг сайта binance запущен")
         for ticker in binance_tickers:
-            driver = undetected_chromedriver.Chrome()
+            options = ChromeOptions()
+            options.add_argument('--headless')
+            driver = undetected_chromedriver.Chrome(options=options)
             driver.get(f"https://www.binance.com/ru/trade/{ticker}?_from=markets&theme=dark&type=isolated")
             html_source = driver.page_source
 
@@ -63,7 +71,4 @@ class SeleniumBinance:
             with open(ticker_and_path[4], 'w') as file:
                 writer = csv.writer(file)
                 writer.writerow(ticker_and_path[0:4])
-
-
-if __name__ == "__main__":
-    SeleniumBinance()
+        logging.info('Данные с сайта binance записаны в файл')
