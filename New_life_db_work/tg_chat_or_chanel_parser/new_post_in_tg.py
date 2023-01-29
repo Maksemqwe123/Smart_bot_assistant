@@ -1,3 +1,6 @@
+# -*- coding: utf8 -*-
+
+
 from telethon import types
 from telethon import TelegramClient, events
 import csv
@@ -17,7 +20,7 @@ async def normal_handler(event):
         add_chat_name = '@' + str(username)
         print('всё ок')
 
-        with open("chat.csv", "w") as f:
+        with open(r"C:\Users\makce\PycharmProjects\pythonProject\food\chat.csv", "w") as f:
             writer = csv.writer(f)
             writer.writerow(add_chat_name)
             print('запись готова')
