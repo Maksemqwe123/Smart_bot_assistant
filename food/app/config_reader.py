@@ -17,7 +17,7 @@ def load_config(path: str):
     config = configparser.ConfigParser()
     config.read(path)
 
-    tg_bot = config['bot']
+    tg_bot = config['bot_expenses']
 
     return Config(
         tg_bot=TgBot(
