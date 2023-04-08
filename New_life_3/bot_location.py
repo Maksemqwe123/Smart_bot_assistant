@@ -16,8 +16,8 @@
 #     Q2 = State()
 #
 #
-# bot = Bot('5587641606:AAGVMc75T2zaq_GovxKy0nn8wiKFAKBbOvg')
-# dp = Dispatcher(bot, storage=MemoryStorage())
+# bot_expenses = Bot('5587641606:AAGVMc75T2zaq_GovxKy0nn8wiKFAKBbOvg')
+# dp = Dispatcher(bot_expenses, storage=MemoryStorage())
 #
 # me = []
 #
@@ -30,7 +30,7 @@
 #     keyboard_1 = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
 #     button_geo_1 = types.KeyboardButton(text="Узнать ближайшую кофе", request_location=loc_geo)
 #     keyboard_1.add(button_geo_1)
-#     await bot.send_message(message.chat.id, "Привет! Нажми на кнопку и передай мне свое местоположение", reply_markup=keyboard)
+#     await bot_expenses.send_message(message.chat.id, "Привет! Нажми на кнопку и передай мне свое местоположение", reply_markup=keyboard)
 #
 #
 # @dp.message_handler(Command("test"), state=None)
@@ -57,8 +57,8 @@
 #     msg = message.text
 #
 #     if msg == '1':
-#         send = bot.send_message(message.chat.id,
-#                                     "Введите следующее значение".format(message.from_user, bot.get_me()),
+#         send = bot_expenses.send_message(message.chat.id,
+#                                     "Введите следующее значение".format(message.from_user, bot_expenses.get_me()),
 #                                     parse_mode='html')
 #
 #         a = inputBot(message, 'Введите следующее значение')
@@ -72,7 +72,7 @@
 #         return False
 #
 #     a.clear()
-#     mes = bot.send_message(message, text)
+#     mes = bot_expenses.send_message(message, text)
 #     print(mes)
 
 
@@ -99,7 +99,7 @@
 #         print("latitude: %s; longitude: %s" % (message.location.latitude, message.location.longitude)
 #
 # if __name__ == '__main__':
-#     print('bot polling started')
+#     print('bot_expenses polling started')
 #     executor.start_polling(dp, skip_updates=True)
 # latitude: 52.473507; longitude: 31.02713
 
@@ -107,25 +107,25 @@
 
 # import telebot
 # from telebot import types
-# bot = telebot.TeleBot('5587641606:AAGVMc75T2zaq_GovxKy0nn8wiKFAKBbOvg')
+# bot_expenses = telebot.TeleBot('5587641606:AAGVMc75T2zaq_GovxKy0nn8wiKFAKBbOvg')
 #
 #
-# @bot.message_handler(commands=["start"])
+# @bot_expenses.message_handler(commands=["start"])
 # def start (message):
 #     #Клавиатура с кнопкой запроса локации
 #     keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
 #     button_geo = types.KeyboardButton(text="Отправить местоположение", request_location=True)
 #     keyboard.add(button_geo)
-#     bot.send_message(message.chat.id, "Поделись местоположением", reply_markup=keyboard)
+#     bot_expenses.send_message(message.chat.id, "Поделись местоположением", reply_markup=keyboard)
 #
 #  #Получаю локацию
-# @bot.message_handler(content_types=['location'])
+# @bot_expenses.message_handler(content_types=['location'])
 # def location (message):
 #     if message.location is not None:
 #         print(message.location)
 #         print(message)
 #
-# bot.polling(none_stop = True)
+# bot_expenses.polling(none_stop = True)
 # input()
 
 # Отдать с начала пользователю долготу и шыроту, а потом запросить координаты, чтобы показать его геолокацию
@@ -144,19 +144,17 @@
 #         ab_index = ab.index(geolocation_me) - 1 if ab.index(geolocation_me) > 0 else 0
 #         spend = (ab[ab_index])
 #         print(spend[0])
-#         await bot.send_location(message.chat.id, spend[0], spend[1])
+#         await bot_expenses.send_location(message.chat.id, spend[0], spend[1])
 
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
-import h3
 from geolocation import loc_geo
-from parsers.parser_cinema import *
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from sq_file_lite import *
-from aiogram.types import BotCommand
+
 metrix_1 = []
 
 db = Database('database.db')
@@ -230,5 +228,5 @@ async def put_registration_number(message: types.Message, state: FSMContext):
 
 
 if __name__ == '__main__':
-    print('bot polling started')
+    print('bot_expenses polling started')
     executor.start_polling(dp, skip_updates=True)
